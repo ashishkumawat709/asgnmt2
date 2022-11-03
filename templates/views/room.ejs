@@ -1,0 +1,105 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/footer.ejs') %>
+
+    <h1>Data</h1>
+    <form>
+
+        <div class="form-group col-md-4">
+            <label for="inputEmail4"> Name</label>
+            <input type="text" class="form-control" id="fname" value=<%=user.name %> readonly>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="inputEmail4">Email</label>
+            <input type="text" class="form-control" id="email" value=<%=user.email %> readonly>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputEmail4">Socket id</label>
+            <input type="text" class="form-control" id="socket_id" readonly>
+        </div>
+    </form>
+
+    <h2 id="room"></h2>
+    <h1>Online Player</h1>
+    <table id="tbl" class="table">
+        <thead>
+            <tr>
+                <th scope="col">First name</th>
+                <th scope="col">Email Id</th>
+                <th scope="col">Socket Id</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+        var socket = io('/admin');
+
+        const room = "Live Users";
+        var somerow = document.getElementById("somerow");
+        var name = document.getElementById("fname").value;
+        var email = document.getElementById("email").value;
+        var localSocket_id;
+        var local_arr = [];
+      
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelector('button').addEventListener('click', clickHandler);
+        });
+
+        function clickHandler(element) {
+            location.reload(false);
+        }
+        socket.on('connect', () => {       //when client is connect then join room
+            let user_details = {
+                client_name: name,
+                client_email: email,
+                room: room,
+            };
+            socket.emit('join', user_details);
+            localSocket_id = document.getElementById("socket_id").value = socket.id;
+            console.log("local " + localSocket_id);
+        });
+
+
+        socket.on('userInfo', (data) => {
+            $("#tbl").empty();
+            local_arr = data;
+            for (let i = 0; i < data.length; i++) {
+              //  if (localSocket_id != data[i].socketId && email != data[i].user_data.email) {
+                    var tr = document.createElement("tr");
+                    console.log('Runinig........')
+                    var td1 = tr.appendChild(document.createElement("td"));
+                    var td2 = tr.appendChild(document.createElement("td"));
+                    var td3 = tr.appendChild(document.createElement("td"));
+                    td1.innerHTML = data[i].user_data.first_name
+                    td2.innerHTML = '<input onclick="javascript:myfunc(this.value)" type=submit value=' + data[i].user_data.email + ' id=' + data[i].user_data.email + ' />'
+                    td3.innerHTML = data[i].socketId
+                    document.getElementById("tbl").appendChild(tr);
+                    // setTimeout(() => {
+                    //     socket.disconnect(true);
+                    // }, 3000)
+         //       }
+            }
+
+        })
+        function myfunc(val) {
+            for (let i = 0; i < local_arr.length; i++) {
+                if (local_arr[i].user_data.email == val) {
+                    display(local_arr[i]);
+                }
+            }
+        }
+
+        function display(data) {
+            var name = data.user_data.first_name + " " + data.user_data.last_name;
+            var phone = data.user_data.phone_no;
+            var email = data.user_data.email;
+            var address = data.user_data.street + " , " + data.user_data.city + " , " + data.user_data.state + " , " + data.user_data.country;
+            var userid = data.user_data.login_id;
+            var details = "NAME:" + name + "\n" + "EMAIL:" + email + "\n" + "PHONE NUMBER:" + phone + "\n" + "ADDRESS:" + address + "\n" + "USER ID:" + userid
+            alert(details);
+        }
+
+</script>
+      

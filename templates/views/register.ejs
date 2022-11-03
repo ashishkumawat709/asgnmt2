@@ -1,0 +1,64 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbar.ejs')%>
+    <div class="container">   
+        <h2 class="text-center ">Registration Page</h2>
+        <hr>
+        <form action="/register" method="Post">
+            <div class="mb-3">
+                <label for="inputEmail4">First name</label>
+                <input type="text" class="form-control" id="n1" name="first_name"  placeholder="First Name" > 
+              </div>
+              <div class="mb-3">
+                <label for="inputEmail4">Last name</label>
+                <input type="text" class="form-control" id="n2" name="last_name" placeholder="Last Name" required>               
+              </div>
+              <div class="mb-3">
+                <label for="inputEmail4">Mobile no</label>
+                <input type="tel" class="form-control" id="phone" name="phone_no" value="+91"  placeholder="Mobile No" 
+                 required> 
+              </div>
+              <div class="mb-3">
+                <label for="inputEmail4">Email</label>
+                <input type="email" class="form-control" id="email"  name="email" placeholder="Enter your email" required>              
+              </div>     
+            <div class="form-group">
+              <label for="inputAddress" id="address">Address</label>
+            </div>
+            <div class="mb-3">
+                <label for="inputCity">Street</label>
+                <input type="street" name="street" placeholder="Street" required>
+              </div>
+              <div class="mb-3">
+                <label for="inputState">City</label>
+                <input type="city" name="city" placeholder="City" title="Please enter on alphabets only."
+                  required>
+              </div>
+              <div class="mb-3">
+                <label for="inputCity">State</label>
+                <input type="state" name="state" placeholder="State"   title="Please enter on alphabets only."
+                  required>
+              </div>
+              <div class="mb-3">
+                <label for="inputCity">Country</label>
+                <input type="county" name="country" placeholder="Country" 
+                 required>
+              </div>
+              <div class="mb-3">
+              <label for="inputEmail4"> Login id</label>
+              <input type="text" class="form-control" id="login_id" name="login_id" placeholder="Login_id"
+                pattern="[a-zA-Z0-9-]+.{7,}" title="Must contain valid id and at least 8 or more characters" required>
+              </div>
+                <div class="mb-3">
+              <label for="inputPassword4">Password</label>
+              <input type="password" class="form-control" id="pwd" name="password" placeholder="Password"
+                required>            
+            </div>
+            <button type="submit" class="btn btn-outline-primary">Save</button>
+          </form>
+          <form action="view">
+            <button type="submit" class="btn btn-outline-primary">View All</button>
+          </form>
+    </div>
+</div> 
+
+<%- include('../partials/footer.ejs') %>

@@ -1,0 +1,51 @@
+<%- include('../partials/header.ejs') %>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First name</th>
+        <th scope="col">Last name</th>
+        <th scope="col">Mobile no</th>
+        <th scope="col">Email Id</th>
+        <th scope="col">Address</th>
+        <th scope="col">Login id</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%var i=1%>
+      <%dataList.forEach(result=>{%>
+        <tr>
+          <th scope="row">
+            <%=i++%>
+          </th>
+          <td>
+            <%=result.first_name%>
+          </td>
+          <td>
+            <%=result.last_name%>
+          </td>
+          <td>
+            <%=result.phone_no%>
+          </td>
+          <td>
+            <%=result.email%>
+          </td>
+          <td>
+            <%=result.street%>,
+
+              <%=result.city%>,
+
+                <%=result.state%>,
+                
+                  <%=result.country%>
+          </td>
+          <td>
+            <%=result.login_id%>
+          </td>
+        </tr>
+        <% })%>
+    </tbody>    
+  </table>
+  
+  <%- include('../partials/footer.ejs') %>
